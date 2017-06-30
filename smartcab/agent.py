@@ -82,7 +82,28 @@ class LearningAgent(Agent):
         # Calculate the maximum Q-value of all actions for a given state
 
         maxQ = max(self.Q[state], key=lambda i: self.Q[state][i])
-
+        
+        #get highest q-value
+        maxQ_value = max(self.Q[state].values())
+        print "max Q:"
+        print maxQ
+        print "highest q-value: " + str(maxQ_value)
+        
+        #if there are actions with equal maxQ then choose an action randomly
+        from numpy import random
+        import time
+        #get actions with equal maxQ-value
+        maxQ_actions = [action for action in self.Q[state] if self.Q[state][action] == maxQ_value]
+        
+        if len(maxQ_actions) > 1:
+            #print "Doppelter maxQ-value gefunden"
+            #print "Possible actions: " + str(maxQ_actions)
+            #print "MaxQ vorher: " + maxQ
+            maxQ = maxQ_actions[random.randint(0, len(maxQ_actions))]
+            #print "MaxQ nachher: " + maxQ
+            #time.sleep(5)
+            
+        
         return maxQ 
 
 
@@ -132,7 +153,7 @@ class LearningAgent(Agent):
                 print "Epsilon: " + str(self.epsilon)
             else:
                 #for item in self.Q[state].items()
-                action =  max(self.Q[state], key=lambda i: self.Q[state][i])
+                action =  self.get_maxQ(state)
                 if action == "None":
                     action = None
                 #for testing
@@ -156,15 +177,13 @@ class LearningAgent(Agent):
         if not self.learning:
             return
         
-        print "Test"
-        
+        #print "Test"
         if action == None:
             action = "None"
         #self.Q[state][action] = reward * self.alpha 
         self.Q[state][action] = reward * self.alpha + self.Q[state][action]*(1-self.alpha)
-        
-        
-        print self.Q[state]
+  
+        #print self.Q[state]
 
         return 
 

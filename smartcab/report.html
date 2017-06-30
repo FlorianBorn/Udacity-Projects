@@ -11874,7 +11874,6 @@ It seems that there are three kind of rewards:</p>
 <p>"How does the light changing color affect the rewards?"</p>
 <ul>
 <li>the green light increases the reward (to between 1 and 3)</li>
-<li>the yellow light either decreases or increases the reward depending on the previous color (previous color: red=increase, green= decrease)</li>
 <li>the red light decreases the reward (to between -4 and -6)</li>
 </ul>
 <ul>
@@ -11918,10 +11917,10 @@ It seems that there are three kind of rewards:</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-agent.py
-verbos: By setting the verbose flag, additional features are printed into the shell with each step
-enforce_deadline: An additional metric (% of time remaining) is printed into the upper area of the pygame window
-grid_size: With this flag, we can set the size of our "grid world"</p>
+agent.py</p>
+<p>verbos: By setting the verbose flag, additional features are printed into the shell with each step</p>
+<p>enforce_deadline: If set to true: An additional metric (% of time remaining) is printed into the upper area of the pygame window. If remaining time reaches 0, the current trial is considered as failed.</p>
+<p>grid_size: With this flag, we can set the size of our "grid world"</p>
 <p>environment.py:
 If an agent performs an action, the act() function is called.</p>
 <p>simulator.py
@@ -13183,7 +13182,6 @@ I chose 'waypoint' and 'inputs' (containing light, left, right, oncoming).</p>
 <li>forward</li>
 <li>left</li>
 <li>right</li>
-<li>none </li>
 </ul>
 <p>Possible values of light:</p>
 <ul>
@@ -13211,10 +13209,10 @@ I chose 'waypoint' and 'inputs' (containing light, left, right, oncoming).</p>
 <li>left</li>
 <li>right</li>
 </ul>
-<p>This should give a total number of 512 (4<em>2</em>4<em>4</em>4) states.
-Since waypoint == none can only be true if the agent has reached its destination, which should happen only once per trial, and there are 128 states (1<em>2</em>4<em>4</em>4) with waypoint == none, the least amount of training trials should be 128.
-Furthermore I think that it is very unlikely, that the agent will visit each of this state within the first 128 trials, so that there will be lot more trials required.</p>
-<p>Now, it depends on what is considered as a reasonable number. I think that the minimum of 128 trials is already a considerable number.</p>
+<p>This should give a total number of 384 (3x2x4x4x4) states. 
+Assuming that the agent visits 20-30 states per trial, it will need at least 13 trials to just visit the states once. Furthermore it needs to visit each state 4 times to get a reward for each state/action paire. This would increase the required trials to ca. 52.
+I think that it is very unlikely, that the agent will visit each of this state/action within the first 52 trials, so that there will be lot more trials required.</p>
+<p>Now, it depends on what is considered as a reasonable number. I think that the minimum of 52 trials is already a considerable number.</p>
 
 </div>
 </div>
